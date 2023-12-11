@@ -1,5 +1,10 @@
 package geocode
 
+import (
+	"fmt"
+	"strconv"
+)
+
 func NewResponse(opts ...ResponseOptFunc) *Response {
 	o := responseDefaultOpts()
 	for _, fn := range opts {
@@ -34,4 +39,18 @@ type Location struct {
 	Class       string   `json:"class"`
 	Type        string   `json:"type"`
 	Importance  float64  `json:"importance"`
+}
+
+func (l *Location) GetLatLon() (float64, float64, error) {
+	lat, err := strconv.ParseFloat(l.Lat, 64)
+	if err != nil {
+		lat = 0
+		return 0, 0, fmt.Errorf("error parsing lat: %w", err)
+	}
+	lon, err := strconv.ParseFloat(l.Lon, 64)
+	if err != nil {
+		lon = 0
+		return 0, 0, fmt.Errorf("error parsing lon: %w", err)
+	}
+	return lat, lon, nil
 }
