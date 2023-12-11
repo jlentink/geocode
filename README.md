@@ -1,4 +1,6 @@
 # Geocode
+[![GoDoc](https://godoc.org/github.com/jlentink/geocode?status.svg)](https://godoc.org/github.com/jlentink/geocode)
+[![Go Report Card](https://goreportcard.com/badge/github.com/jlentink/geocode)](https://goreportcard.com/report/github.com/jlentink/geocode)
 
 This is a simple Go package for geocoding addresses using the [Geocode API](https://geocode.maps.co/).
 
