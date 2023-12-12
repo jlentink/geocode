@@ -91,9 +91,11 @@ func (g *GeoCode) Encode(subject string) (*Response, error) {
 func (g *GeoCode) EncodeParametrized(param FindParam) (*Response, error) {
 	subject := param.ToString()
 	if g.cache.Exists(subject) {
+		logger.Debug("Cache hit for %s", subject)
 		return g.cache.Get(subject)
 	}
 	if !g.rateLimit.Claim() {
+		logger.Debug("Rate limit hit for %s", subject)
 		return nil, ErrRateLimit
 	}
 
