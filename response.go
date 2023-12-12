@@ -41,16 +41,16 @@ type Location struct {
 	Importance  float64  `json:"importance"`
 }
 
-func (l *Location) GetLatLon() (float64, float64, error) {
-	lat, err := strconv.ParseFloat(l.Lat, 64)
+func (l *Location) GetLatLon() (lat, lon float64, err error) {
+	lat, err = strconv.ParseFloat(l.Lat, 64)
 	if err != nil {
-		lat = 0
-		return 0, 0, fmt.Errorf("error parsing lat: %w", err)
+		err = fmt.Errorf("error parsing lat: %w", err)
+		return 0, 0, err
 	}
-	lon, err := strconv.ParseFloat(l.Lon, 64)
+	lon, err = strconv.ParseFloat(l.Lon, 64)
 	if err != nil {
-		lon = 0
-		return 0, 0, fmt.Errorf("error parsing lon: %w", err)
+		err = fmt.Errorf("error parsing lon: %w", err)
+		return 0, 0, err
 	}
 	return lat, lon, nil
 }

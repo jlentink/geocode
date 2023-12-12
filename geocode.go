@@ -79,7 +79,10 @@ func (g *GeoCode) Encode(subject string) (*Response, error) {
 	if err != nil {
 		return nil, err
 	}
-
+	e := g.cache.Set(subject, locations)
+	if e != nil {
+		g.options.log.Error("Could not persist cache: %s", e)
+	}
 	return NewResponse(ResponseWithLocations(locations), ResponseWithCached(false)), nil
 }
 
