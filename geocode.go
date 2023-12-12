@@ -53,6 +53,7 @@ type GeoCode struct {
 // requested for a delay before the next request can be made.
 func (g *GeoCode) Encode(subject string) (*Response, error) {
 	if g.cache.Exists(subject) {
+		logger.Debug("Cache hit for %s", subject)
 		resp, err := g.cache.Get(subject)
 		return resp, err
 	}
@@ -127,6 +128,7 @@ func (g *GeoCode) ReverseEncode(lat, log float64) (*Response, error) {
 	sLon := fmt.Sprintf("%f", log)
 	subject := sLat + "," + sLon
 	if g.cache.Exists(subject) {
+		logger.Debug("Cache hit for %s", subject)
 		r, err := g.cache.Get(subject)
 		return r, err
 	}
