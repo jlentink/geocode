@@ -1,4 +1,3 @@
 module github.com/jlentink/geocode
 
-
-go 1.21.4
+go 1.21

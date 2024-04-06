@@ -21,6 +21,7 @@ func ResponseWithLocations(locations []*Location) ResponseOptFunc {
 		o.Locations = locations
 	}
 }
+
 func ResponseWithLocation(location *Location) ResponseOptFunc {
 	return func(o *ResponseOpt) {
 		o.Locations = []*Location{location}

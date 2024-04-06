@@ -10,18 +10,27 @@ type Opts struct {
 	log              Loggable
 }
 
+// WithCache sets the cache for the geocode service.
+//
+//goland:noinspection GoUnusedExportedFunction
 func WithCache(cache ICache) OptFunc {
 	return func(o *Opts) {
 		o.cache = cache
 	}
 }
 
+// WithRateLimit sets the rate limit for the geocode service.
+//
+//goland:noinspection GoUnusedExportedFunction
 func WithRateLimit(rateLimit int) OptFunc {
 	return func(o *Opts) {
 		o.rateLimit = rateLimit
 	}
 }
 
+// WithLogger sets the logger for the geocode service.
+//
+//goland:noinspection GoUnusedExportedFunction
 func WithLogger(log Loggable) OptFunc {
 	return func(o *Opts) {
 		o.log = log

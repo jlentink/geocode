@@ -1,6 +1,9 @@
 package geocode
 
-//[{"place_id":32279975,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","powered_by":"Map Maker: https://maps.co","osm_type":"node","osm_id":2812003297,"boundingbox":["52.5561276","52.5562276","4.6639743","4.6640743"],"lat":"52.5561776","lon":"4.6640243","display_name":"103, Iepenlaan, Castricum, North Holland, Netherlands, 1901SV, Netherlands","class":"place","type":"house","importance":0.31100000000000005}]
+import (
+	"fmt"
+	"strconv"
+)
 
 func NewResponse(opts ...ResponseOptFunc) *Response {
 	o := responseDefaultOpts()
@@ -14,13 +17,15 @@ func NewResponse(opts ...ResponseOptFunc) *Response {
 	}
 }
 
+// Response is the wrapper for the geocode API response
+// that contains the results, potential retry delay and cached status.
 type Response struct {
 	Locations  []*Location `json:"locations"`
 	Cached     bool        `json:"cached"`
 	RetryAfter int         `json:"retry_after"`
 }
 
-// Location is the response from the geocode API
+// Location is the response from the geocode API.
 type Location struct {
 	PlaceID     int64    `json:"place_id"`
 	Licence     string   `json:"licence"`
@@ -34,4 +39,18 @@ type Location struct {
 	Class       string   `json:"class"`
 	Type        string   `json:"type"`
 	Importance  float64  `json:"importance"`
+}
+
+func (l *Location) GetLatLon() (lat, lon float64, err error) {
+	lat, err = strconv.ParseFloat(l.Lat, 64)
+	if err != nil {
+		err = fmt.Errorf("error parsing lat: %w", err)
+		return 0, 0, err
+	}
+	lon, err = strconv.ParseFloat(l.Lon, 64)
+	if err != nil {
+		err = fmt.Errorf("error parsing lon: %w", err)
+		return 0, 0, err
+	}
+	return lat, lon, nil
 }

@@ -1,20 +1,20 @@
 package geocode
 
+//goland:noinspection GoUnusedExportedFunction
 func NewNoCache() *NoCache {
 	return &NoCache{}
 }
 
-type NoCache struct {
-}
+type NoCache struct{}
 
-func (i NoCache) Exists(key string) bool {
+func (i NoCache) Exists(string) bool {
 	return false
 }
 
-func (i NoCache) Get(key string) (*Response, error) {
+func (i NoCache) Get(string) (*Response, error) {
 	return NewResponse(), ErrNotFound
 }
 
-func (i NoCache) Set(key string, value *[]*Location) error {
+func (i NoCache) Set(string, *[]*Location) error {
 	return nil
 }

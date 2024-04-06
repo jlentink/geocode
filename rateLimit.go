@@ -21,13 +21,12 @@ func (r *RateLimit) Claim() bool {
 		r.slot = now
 		r.hits = 1
 		return true
-	} else {
-		r.hits++
-		if r.hits > r.Max {
-			logger.Debug("Rate limit hit")
-			return false
-		}
-		logger.Debug("Rate limit incremented")
-		return true
 	}
+	r.hits++
+	if r.hits > r.Max {
+		logger.Debug("Rate limit hit")
+		return false
+	}
+	logger.Debug("Rate limit incremented")
+	return true
 }
